@@ -29,13 +29,18 @@ const Footer = () => (
           </ul>
         </div>
 
-        {/* Company */}
+        {/* Company & Events */}
         <div className="footer-col">
           <h4>Company</h4>
           <ul>
             <li><Link href="#work">Our Work</Link></li>
             <li><Link href="#process">Process</Link></li>
             <li><Link href="#contact">Contact</Link></li>
+            <li>
+              <a href="https://dorahacks.io/hackathon/ideathon4agiwithai/detail" target="_blank" rel="noopener noreferrer">
+                Ideathon for AGI With AI
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -43,9 +48,17 @@ const Footer = () => (
         <div className="footer-col">
           <h4>Social</h4>
           <ul>
-            <li><span>X / Twitter</span></li>
+            <li>
+              <a href="https://x.com/agiwithai" target="_blank" rel="noopener noreferrer">
+                X / Twitter
+              </a>
+            </li>
             <li><span>LinkedIn</span></li>
-            <li><span>GitHub</span></li>
+            <li>
+              <a href="https://github.com/AGIwithAI" target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            </li>
           </ul>
         </div>
       </div>
