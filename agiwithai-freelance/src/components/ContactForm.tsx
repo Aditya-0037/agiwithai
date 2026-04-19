@@ -6,32 +6,65 @@ const ContactForm = () => {
   const [form, setForm] = useState({ name: '', email: '', details: '' });
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Construct mailto link with form data
-    const subject = encodeURIComponent(`Project Inquiry from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\nProject Details:\n${form.details}`
-    );
-    window.open(`mailto:team@agiwithai.com?subject=${subject}&body=${body}`);
-    setSent(true);
-    setForm({ name: '', email: '', details: '' });
-    setTimeout(() => setSent(false), 5000);
+    setLoading(true);
+    setError(false);
+    
+    try {
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        setSent(true);
+        setForm({ name: '', email: '', details: '' });
+        setTimeout(() => setSent(false), 8000);
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="card">
       {sent && (
         <div style={{
-          background: 'var(--color-warm-yellow)',
-          border: '2px solid var(--color-black)',
+          background: '#dcfce7',
+          color: '#166534',
+          border: '2px solid #166534',
           borderRadius: '6px',
           padding: '14px 18px',
           marginBottom: '20px',
           fontWeight: 600,
           fontSize: '14px'
         }}>
-          ✓ Your email client has been opened. We&apos;ll respond soon!
+          ✓ Message sent successfully! We&apos;ll get back to you soon.
+        </div>
+      )}
+      {error && (
+        <div style={{
+          background: '#fee2e2',
+          color: '#991b1b',
+          border: '2px solid #991b1b',
+          borderRadius: '6px',
+          padding: '14px 18px',
+          marginBottom: '20px',
+          fontWeight: 600,
+          fontSize: '14px'
+        }}>
+          ⚠ Failed to send message. Please try again or email us directly.
         </div>
       )}
       <form onSubmit={handleSubmit}>
@@ -67,8 +100,14 @@ const ContactForm = () => {
             onChange={(e) => setForm({ ...form, details: e.target.value })}
           />
         </div>
-        <button type="submit" id="contact-submit" className="btn btn-primary" style={{ width: '100%', padding: '16px' }}>
-          Send Message
+        <button 
+          type="submit" 
+          id="contact-submit" 
+          className="btn btn-primary" 
+          disabled={loading}
+          style={{ width: '100%', padding: '16px', opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
+        >
+          {loading ? 'Sending...' : 'Send Message'}
         </button>
       </form>
     </div>
