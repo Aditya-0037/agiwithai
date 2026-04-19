@@ -108,8 +108,8 @@ section { padding: 100px 0; }
 
 .btn:active { transform: scale(0.98); }
 
-.btn-primary { background: var(--color-black); color: var(--color-white); }
-.btn-primary:hover { background: var(--color-white); color: var(--color-black); }
+.btn-primary { background: var(--color-warm-yellow); color: var(--color-black); }
+.btn-primary:hover { background: var(--color-black); color: var(--color-white); }
 
 .btn-secondary { background: var(--color-white); color: var(--color-black); }
 .btn-secondary:hover { background: var(--color-warm-yellow); }
